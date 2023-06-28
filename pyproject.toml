@@ -1,0 +1,38 @@
+[project]
+name = "pynews"
+version = "0.0.1"
+dependencies = ["httpx"]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "flake8",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+    "pytest-asyncio",
+    "python-dotenv",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+include = ["apps/", "config/"]
+
+[tool.pytest.ini_options]
+markers = [
+    "current_dev: Test under current development",
+    "integ: Integration test (inactive by default)",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
+python_files = ["tests.py", "test_*.py"]
+
+[tool.coverage.run]
+omit = [
+    "**/tests/*",
+]
+
+[tool.mypy]
+ignore_missing_imports = true
+warn_no_return = false
