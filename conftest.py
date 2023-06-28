@@ -3,6 +3,18 @@ from typing import Any
 import httpx
 
 
+article_dict: dict[str, Any] = {
+    "source": {"id": "fake_id", "name": "fake_name"},
+    "author": "fake_author",
+    "title": "fake_title",
+    "description": "fake_description",
+    "url": "fake_url",
+    "urlToImage": "fake_url_to_image",
+    "publishedAt": "2023-06-09T17:28:51Z",
+    "content": "fake_content",
+}
+
+
 @dataclass
 class ResponseMock:
     status_code: int
