@@ -10,9 +10,9 @@ class TestModels:
         assert source.name == "fake_name"
 
     def test_article_init(self) -> None:
-        source: Source = Source(id="fake_id", name="fake_name")
         article: Article = Article(**article_dict)
-        assert article.source == source
+        assert article.source.id == "fake_id"
+        assert article.source.name == "fake_name"
         assert article.author == "fake_author"
         assert article.title == "fake_title"
         assert article.description == "fake_description"
