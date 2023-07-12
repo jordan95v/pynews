@@ -1,9 +1,12 @@
 from datetime import datetime, timezone
+
+import pytest
 from core.models.article import Article, Source
 from conftest import article_dict
+from core.models.search import SearchEverything
 
 
-class TestModels:
+class TestArticle:
     def test_source_init(self) -> None:
         source: Source = Source(id="fake_id", name="fake_name")
         assert source.id == "fake_id"
@@ -22,3 +25,24 @@ class TestModels:
             2023, 6, 9, 17, 28, 51, tzinfo=timezone.utc
         )
         assert article.content == "fake_content"
+
+
+class TestSearchEverything:
+    @pytest.mark.parametrize(
+        "given, throwable",
+        [
+            (dict(q="fake_query", search_in="hello"), ValueError),
+            (dict(q="fake_query", search_in="title"), None),
+            (dict(q="fake_query", sort_by="hello"), ValueError),
+            (dict(q="fake_query", sort_by="relevancy"), None),
+        ],
+    )
+    def test_search_everything_test_validator(
+        self, given: dict[str, str], throwable: Exception | None
+    ) -> None:
+        if throwable:
+            with pytest.raises(throwable):
+                SearchEverything(**given)
+        else:
+            search: SearchEverything = SearchEverything(**given)
+            assert search.model_dump(exclude_none=True) == given
