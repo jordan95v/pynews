@@ -3,9 +3,15 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 
 
+class NewsResponse(BaseModel):
+    status: str
+    total_results: int = Field(..., alias="totalResults")
+    articles: list[Article]
+
+
 class Source(BaseModel):
-    id: str
-    name: str
+    id: str | None = None
+    name: str | None = None
 
 
 class Article(BaseModel):

@@ -1,7 +1,8 @@
 from datetime import datetime, timezone
+from typing import Any
 
 import pytest
-from core.models.article import Article, Source
+from core.models.article import Article, NewsResponse, Source
 from conftest import article_dict
 from core.models.search import SearchEverything
 
@@ -25,6 +26,17 @@ class TestArticle:
             2023, 6, 9, 17, 28, 51, tzinfo=timezone.utc
         )
         assert article.content == "fake_content"
+
+    def test_news_init(self) -> None:
+        data: dict[str, Any] = {
+            "status": "fake_status",
+            "totalResults": 1,
+            "articles": [article_dict],
+        }
+        news: NewsResponse = NewsResponse(**data)
+        assert news.status == "fake_status"
+        assert news.total_results == 1
+        assert len(news.articles) == 1
 
 
 class TestSearchEverything:

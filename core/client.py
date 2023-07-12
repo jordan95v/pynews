@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 from typing import Any
 import httpx
+from core.models.article import Article, NewsResponse
+from core.models.search import SearchEverything
 
-from core.utils.exception import BadRequest
+from core.utils.exception import NewsAPIError
 
 
 @dataclass
@@ -30,4 +32,23 @@ class Client:
             res.raise_for_status()
             return res
         except httpx.HTTPError as error:
-            raise BadRequest(error)
+            raise NewsAPIError(error)
+
+    async def get_everything(self, search: SearchEverything) -> NewsResponse:
+        """Get everything from the API.
+
+        Args:
+            search (SearchEverything): The search parameters.
+
+        Returns:
+            NewsResponse: The response from the API.
+        """
+
+        res: httpx.Response = await self._call(
+            "https://newsapi.org/v2/everything",
+            search.model_dump(exclude_none=True, by_alias=True),
+        )
+        try:
+            return NewsResponse(**res.json())
+        except ValueError as error:
+            raise NewsAPIError(error)

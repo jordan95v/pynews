@@ -1,0 +1,19 @@
+{
+    "status": 852,
+    "totalResults": "hello",
+    "articles": [
+        {
+            "source": {
+                "id": 0,
+                "name": "Engadget"
+            },
+            "author": "Igor Bonifacic",
+            "title": null,
+            "description": "On Friday, a federal court sentenced Joseph James O’Conner\r\n to five years in prison for his involvement in the 2020 Twitter hack\r\n. Last month, the 24-year-old, known as PlugwalkJoe online, plead guilty\r\n to a host of cyber crimes, including carrying out a S…",
+            "url": "https://www.engadget.com/twitter-hacker-and-crypto-scammer-sentenced-to-five-years-in-prison-205649771.html",
+            "urlToImage": "https://s.yimg.com/uu/api/res/1.2/AyF3IKBq4cDibrXjEisFbg--~B/Zmk9ZmlsbDtoPTYzMDtweW9mZj0wO3c9MTIwMDthcHBpZD15dGFjaHlvbg--/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2023-05/8bb3bc70-ef14-11ed-beda-55f5a49aaab2.cf.jpg",
+            "publishedAt": "2023-06-24T20:56:49Z",
+            "content": "On Friday, a federal court sentenced Joseph James OConner\r\n to five years in prison for his involvement in the 2020 Twitter hack\r\n. Last month, the 24-year-old, known as PlugwalkJoe online, plead gui… [+1117 chars]"
+        }
+    ]
+}
