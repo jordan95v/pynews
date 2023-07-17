@@ -15,7 +15,7 @@
 
 Hello folks !<br>
 
-![Anya Gif](hello.gif)
+![Anya Gif](https://media.tenor.com/G13lUO8AyLIAAAAC/spy-x-family-spy-family.gif)
 
 `pynews` is a Python library that provides a simplified and convenient way to interact with the NewsAPI service. It encapsulates the complexities of making API requests and handling responses, allowing developers to easily integrate news data into their applications.
 
@@ -152,4 +152,4 @@ I would like to thank the NewsAPI team for providing a powerful and comprehensiv
 
 <h1>Thanks you for reading me and using <b>pynews</b>!</h1>
 
-![Goodbye Gif](bye.gif)
+![Goodbye Gif](https://media.tenor.com/5UrK7rSTuscAAAAd/goodbye-bye-bye.gif)
