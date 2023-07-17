@@ -7,7 +7,7 @@ from pytest_mock import MockerFixture
 from conftest import ResponseMock
 from core.client import Client
 from core.models.article import Article, NewsResponse
-from core.models.search import SearchEverything
+from core.models.search import SearchEverything, SearchHeadlines
 from core.utils.exception import NewsAPIError
 
 
@@ -54,7 +54,7 @@ class TestClient:
     @pytest.mark.parametrize(
         "data, throwable",
         [
-            (json.loads(Path("tests/samples/data.json").read_bytes()), None),
+            (json.loads(Path("tests/samples/everything.json").read_bytes()), None),
             (
                 json.loads(Path("tests/samples/bad_data.json").read_bytes()),
                 NewsAPIError,
@@ -72,9 +72,37 @@ class TestClient:
         search: SearchEverything = SearchEverything(q="fake_query")
         if throwable:
             with pytest.raises(throwable):
-                print(await client.get_everything(search))
+                await client.get_everything(search)
         else:
             res: NewsResponse = await client.get_everything(search)
             assert res.status == "ok"
             assert res.total_results == 11959
             assert len(res.articles) == 100
+
+    @pytest.mark.parametrize(
+        "data, throwable",
+        [
+            (json.loads(Path("tests/samples/headlines.json").read_bytes()), None),
+            (
+                json.loads(Path("tests/samples/bad_data.json").read_bytes()),
+                NewsAPIError,
+            ),
+        ],
+    )
+    async def test_get_headlines(
+        self,
+        client: Client,
+        data: dict[str, Any],
+        throwable: Exception | None,
+        mocker: MockerFixture,
+    ) -> None:
+        mocker.patch("httpx.AsyncClient.get", return_value=ResponseMock(200, data))
+        search: SearchHeadlines = SearchHeadlines(q="fake_query", country="us")
+        if throwable:
+            with pytest.raises(throwable):
+                await client.get_headlines(search)
+        else:
+            res: NewsResponse = await client.get_headlines(search)
+            assert res.status == "ok"
+            assert res.total_results == 36
+            assert len(res.articles) == 20

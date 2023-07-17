@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Any
 import httpx
 from core.models.article import Article, NewsResponse
-from core.models.search import SearchEverything
+from core.models.search import SearchEverything, SearchHeadlines
 
 from core.utils.exception import NewsAPIError
 
@@ -46,6 +46,25 @@ class Client:
 
         res: httpx.Response = await self._call(
             "https://newsapi.org/v2/everything",
+            search.model_dump(exclude_none=True, by_alias=True),
+        )
+        try:
+            return NewsResponse(**res.json())
+        except ValueError as error:
+            raise NewsAPIError(error)
+
+    async def get_headlines(self, search: SearchHeadlines) -> NewsResponse:
+        """Get headlines from the API.
+
+        Args:
+            search (SearchHeadlines): The search parameters.
+
+        Returns:
+            NewsResponse: The response from the API.
+        """
+
+        res: httpx.Response = await self._call(
+            "https://newsapi.org/v2/top-headlines",
             search.model_dump(exclude_none=True, by_alias=True),
         )
         try:
