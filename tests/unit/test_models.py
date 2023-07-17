@@ -47,6 +47,8 @@ class TestSearchEverything:
             (dict(q="fake_query", search_in="title"), None),
             (dict(q="fake_query", sort_by="hello"), ValueError),
             (dict(q="fake_query", sort_by="relevancy"), None),
+            (dict(q="fake_query", language="hello"), ValueError),
+            (dict(q="fake_query", language="en"), None),
         ],
     )
     def test_search_everything_test_validator(
