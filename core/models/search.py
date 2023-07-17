@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 from pydantic import BaseModel, Field, field_validator
 
 AVAILABLE_LANGUAGES: list[str] = [
@@ -16,6 +17,73 @@ AVAILABLE_LANGUAGES: list[str] = [
     "se",
     "ud",
     "zh",
+]
+
+AVAILABLE_CATEGORY: list[str] = [
+    "business",
+    "entertainment",
+    "general",
+    "health",
+    "science",
+    "sports",
+    "technology",
+]
+
+AVAILABLE_COUNTRY: list[str] = [
+    "ae",
+    "ar",
+    "at",
+    "au",
+    "be",
+    "bg",
+    "br",
+    "ca",
+    "ch",
+    "cn",
+    "co",
+    "cu",
+    "cz",
+    "de",
+    "eg",
+    "fr",
+    "gb",
+    "gr",
+    "hk",
+    "hu",
+    "id",
+    "ie",
+    "il",
+    "in",
+    "it",
+    "jp",
+    "kr",
+    "lt",
+    "lv",
+    "ma",
+    "mx",
+    "my",
+    "ng",
+    "nl",
+    "no",
+    "nz",
+    "ph",
+    "pl",
+    "pt",
+    "ro",
+    "rs",
+    "ru",
+    "sa",
+    "se",
+    "sg",
+    "si",
+    "sk",
+    "th",
+    "tr",
+    "tw",
+    "ua",
+    "us",
+    "ve",
+    "za",
 ]
 
 
@@ -58,4 +126,26 @@ class SearchEverything(Search):
             raise ValueError(
                 f"language must be one of {', '.join(AVAILABLE_LANGUAGES)}"
             )
+        return value
+
+
+class SearchHeadlines(Search):
+    category: str | None = None
+    country: str | None = None
+
+    def model_post_init(self, __context: Any) -> None:
+        if self.sources is not None and self.country is not None:
+            raise ValueError("sources and country cannot be used together")
+        return super().model_post_init(__context)
+
+    @field_validator("category")
+    def category_available_value(cls, value: str):
+        if value not in AVAILABLE_CATEGORY:
+            raise ValueError(f"category must be one of {', '.join(AVAILABLE_CATEGORY)}")
+        return value
+
+    @field_validator("country")
+    def country_available_value(cls, value: str):
+        if value not in AVAILABLE_COUNTRY:
+            raise ValueError(f"country must be one of {', '.join(AVAILABLE_COUNTRY)}")
         return value

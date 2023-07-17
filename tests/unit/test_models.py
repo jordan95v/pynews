@@ -4,7 +4,7 @@ from typing import Any
 import pytest
 from core.models.article import Article, NewsResponse, Source
 from conftest import article_dict
-from core.models.search import SearchEverything
+from core.models.search import SearchEverything, SearchHeadlines
 
 
 class TestArticle:
@@ -51,7 +51,7 @@ class TestSearchEverything:
             (dict(q="fake_query", language="en"), None),
         ],
     )
-    def test_search_everything_test_validator(
+    def test_search_everything_validator(
         self, given: dict[str, str], throwable: Exception | None
     ) -> None:
         if throwable:
@@ -59,4 +59,28 @@ class TestSearchEverything:
                 SearchEverything(**given)
         else:
             search: SearchEverything = SearchEverything(**given)
+            assert search.model_dump(exclude_none=True) == given
+
+
+class TestSearchHeadlines:
+    @pytest.mark.parametrize(
+        "given, throwable",
+        [
+            (dict(q="fake_query", category="hello"), ValueError),
+            (dict(q="fake_query", category="business"), None),
+            (dict(q="fake_query", country="hello"), ValueError),
+            (dict(q="fake_query", country="us"), None),
+            (dict(q="fake_query", country="us", sources="bfm"), ValueError),
+        ],
+    )
+    def test_search_headlines_validator(
+        self,
+        given: dict[str, str],
+        throwable: Exception | None,
+    ) -> None:
+        if throwable:
+            with pytest.raises(throwable):
+                SearchHeadlines(**given)
+        else:
+            search: SearchHeadlines = SearchHeadlines(**given)
             assert search.model_dump(exclude_none=True) == given
