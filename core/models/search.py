@@ -108,9 +108,6 @@ class SearchEverything(Search):
     domains: str | None = None
     language: str | None = None
 
-    class Config:
-        populate_by_name = True
-
     @field_validator("search_in")
     def search_in_available_value(cls, value: str):
         if value not in ["title", "description", "content"]:
