@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from types import TracebackType
 from typing import Any
 import httpx
 from core.models.article import NewsResponse
@@ -72,3 +73,15 @@ class Client:
             return NewsResponse(**res.json())
         except ValueError as error:
             raise NewsAPIError(error)
+
+    async def __aenter__(self) -> "Client":
+        return self
+
+    async def __aexit__(
+        self,
+        exc_type: Any,
+        exc_value: str | None,
+        traceback: TracebackType | None,
+    ) -> None:
+        if exc_type is not None:
+            raise exc_type(exc_value, traceback)

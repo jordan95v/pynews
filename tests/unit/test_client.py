@@ -105,3 +105,12 @@ class TestClient:
             assert res.status == "ok"
             assert res.total_results == 36
             assert len(res.articles) == 20
+
+    async def test_aenter(self) -> None:
+        async with Client(api_key="fake_api_key") as client:
+            assert isinstance(client, Client)
+            assert client.api_key == "fake_api_key"
+
+    async def test_aexit(self, client: Client) -> None:
+        with pytest.raises(NewsAPIError):
+            await client.__aexit__(NewsAPIError, "fake_error", "fake_traceback")
