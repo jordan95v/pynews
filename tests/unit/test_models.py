@@ -1,10 +1,8 @@
 from datetime import datetime, timezone
 from typing import Any
-
 import pytest
-from core.models.article import Article, NewsResponse, Source
 from conftest import article_dict
-from core.models.search import SearchEverything, SearchHeadlines
+from core.models import Article, NewsResponse, Source, SearchEverything, SearchHeadlines
 
 
 class TestArticle:

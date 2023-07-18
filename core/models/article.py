@@ -2,6 +2,8 @@ from __future__ import annotations
 from datetime import datetime
 from pydantic import BaseModel, Field
 
+__all__: list[str] = ["NewsResponse", "Article", "Source"]
+
 
 class NewsResponse(BaseModel):
     status: str

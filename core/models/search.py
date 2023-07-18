@@ -2,6 +2,8 @@ from datetime import datetime
 from typing import Any
 from pydantic import BaseModel, Field, field_validator
 
+__all__: list[str] = ["SearchEverything", "SearchHeadlines"]
+
 AVAILABLE_LANGUAGES: list[str] = [
     "ar",
     "de",
@@ -92,6 +94,9 @@ class Search(BaseModel):
     sources: str | None = None
     page: int | None = None
     page_size: int | None = Field(None, alias="pageSize")
+
+    class Config:
+        populate_by_name = True
 
 
 class SearchEverything(Search):

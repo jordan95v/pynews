@@ -56,9 +56,8 @@ Replace `fake_api_key` with your actual NewsAPI API key.
 To search for news articles using the `SearchEverything` class, use the `search_everything` method as shown below:
 
 ```python
-from pynews.client import Client
-from pynews.models.search import SearchEverything
-from pynews.models.article import NewsResponse
+from pynews import Client
+from pynews.models import SearchEverything, NewsResponse
 
 client: Client = Client(api_key="fake_api_key")
 search: SearchEverything = SearchEverything(
@@ -81,9 +80,8 @@ for article in res.articles:
 To search for news headlines using the `SearchHeadlines` class, use the `search_headlines` method as shown below:
 
 ```python
-from pynews.client import Client
-from pynews.models.search import SearchHeadlines
-from pynews.models.article import NewsResponse
+from pynews import Client
+from pynews.models import SearchHeadlines, NewsResponse
 
 client: Client = Client(api_key="fake_api_key")
 search: SearchHeadlines = SearchHeadlines(
@@ -105,7 +103,7 @@ If you need to retrieve a large number of articles, you can use the pagination f
 Both the SearchEverything and SearchHeadlines classes support pagination by specifying the page_size and page parameters:
 
 ```python	
-from pynews.models.search import SearchEverything
+from pynews.models import SearchEverything
 
 search: SearchEverything = SearchEverything(query='Bitcoin', page_size=20, page=2)
 ```
@@ -118,8 +116,8 @@ You can iterate over the pages to retrieve all the articles.
 If an error occurs while making an API request, the wrapper will raise an exception. You can catch the exception and handle it appropriately.
 
 ```python
-from pynews.client import Client
-from pynews.models.search import SearchHeadlines
+from pynews import Client
+from pynews.models import SearchHeadlines
 from pynews.utils.exceptions import NewsAPIError
 
 try:
