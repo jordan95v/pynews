@@ -19,7 +19,7 @@ Hello folks !<br>
 
 `pynews` is a Python library that provides a simplified and convenient way to interact with the NewsAPI service. It encapsulates the complexities of making API requests and handling responses, allowing developers to easily integrate news data into their applications.
 
-## Installation
+# Installation
 
 If you want to clone this project and add more features, do as follow:
 
@@ -29,13 +29,13 @@ $ source venv/bin/activate # venv/Scripts/activate on Windows
 (venv) $ pip install .[dev]
 ```
 
-## API Key
+# API Key
 
 Before you can start using the wrapper, you need to obtain an API key from the NewsAPI website. Visit https://newsapi.org and sign up for an account to obtain your API key.
 
-## Worflow
+# Worflow
 
-### Initialization
+## Initialization
 
 To initialize `pynews` client, create an instance of `Client` class as shown below:
 
@@ -47,11 +47,11 @@ client: Client = Client(api_key="fake_api_key")
 
 Replace `fake_api_key` with your actual NewsAPI API key.
 
-### Searching News articles
+## Searching News articles
 
 `pynews` provides two main classes, SearchEverything and SearchHeadlines, for querying news articles. 
 
-#### SearchEverything
+### SearchEverything
 
 To search for news articles using the `SearchEverything` class, use the `search_everything` method as shown below:
 
@@ -75,7 +75,7 @@ for article in res.articles:
     print(article.title)
 ```
 
-#### SearchHeadlines
+### SearchHeadlines
 
 To search for news headlines using the `SearchHeadlines` class, use the `search_headlines` method as shown below:
 
@@ -97,7 +97,7 @@ for article in res.articles:
     print(article.title)
 ```
 
-### Pagination
+## Pagination
 
 If you need to retrieve a large number of articles, you can use the pagination feature provided by the wrapper.<br>
 Both the SearchEverything and SearchHeadlines classes support pagination by specifying the page_size and page parameters:
@@ -111,7 +111,7 @@ search: SearchEverything = SearchEverything(query='Bitcoin', page_size=20, page=
 This will retrieve the second page of articles related to the query 'Bitcoin', with each page containing 20 articles.<br>
 You can iterate over the pages to retrieve all the articles.
 
-### Error handling
+## Error handling
 
 If an error occurs while making an API request, the wrapper will raise an exception. You can catch the exception and handle it appropriately.
 
@@ -134,16 +134,16 @@ except NewsAPIError as e:
     print(f"An error occurred: {e}")
 ```
 
-## Contributing
+# Contributing
 
 Contributions to `pynews` are welcome! If you encounter any issues or have suggestions for improvements, please open an issue on the project's GitHub repository.<br>
 Before submitting a pull request, make sure to run the tests and ensure that your changes do not break the existing functionality. Add tests for any new features or fixes you introduce.
 
-## License
+# License
 
 `pynews` is open-source software released under the [MIT License](https://opensource.org/license/mit/). Feel free to use, modify, and distribute it according to the terms of the license.
 
-## Acknowledgements
+# Acknowledgements
 
 This project was developed by [jordan95v](https://github.com/jordan95v).<br>
 I would like to thank the NewsAPI team for providing a powerful and comprehensive news service, making it easier for developers to integrate news data into their applications.
