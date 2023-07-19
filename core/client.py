@@ -1,6 +1,7 @@
 from dataclasses import dataclass
+import functools
 from types import TracebackType
-from typing import Any
+from typing import Any, Type
 import httpx
 from core.models.article import NewsResponse
 from core.models.search import SearchEverything, SearchHeadlines
@@ -27,14 +28,15 @@ class Client:
             httpx.Response: The response from the API.
         """
 
-        async with httpx.AsyncClient() as client:
-            headers: dict[str, str] = {"Authorization": f"Bearer {self.api_key}"}
-            res: httpx.Response = await client.get(url, params=params, headers=headers)
+        headers: dict[str, str] = {"Authorization": f"Bearer {self.api_key}"}
+        res: httpx.Response = await self.session.get(
+            url, params=params, headers=headers
+        )
         try:
             res.raise_for_status()
-            return res
         except httpx.HTTPError as error:
             raise NewsAPIError(error)
+        return res
 
     async def get_everything(self, search: SearchEverything) -> NewsResponse:
         """Get everything from the API.
@@ -74,14 +76,42 @@ class Client:
         except ValueError as error:
             raise NewsAPIError(error)
 
+    @functools.cached_property
+    def session(self) -> httpx.AsyncClient:
+        """The HTTPX session.
+
+        Returns:
+            httpx.AsyncClient: The HTTPX session.
+        """
+
+        return httpx.AsyncClient()
+
     async def __aenter__(self) -> "Client":
+        """Enter the context manager.
+
+        Returns:
+            Client: The client.
+        """
+
         return self
 
     async def __aexit__(
         self,
-        exc_type: Any,
+        exc_type: Type[BaseException] | None,
         exc_value: str | None,
         traceback: TracebackType | None,
     ) -> None:
+        """Exit the context manager and close httpx session.
+
+        Args:
+            exc_type (Type[BaseException] | None): Error type.
+            exc_value (str | None): Error value.
+            traceback (TracebackType | None): Traceback error.
+
+        Raises:
+            exc_type: The error raised.
+        """
+
+        await self.session.aclose()
         if exc_type is not None:
             raise exc_type(exc_value, traceback)

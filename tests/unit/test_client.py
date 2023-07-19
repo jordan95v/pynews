@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from typing import Any
+from unittest.mock import MagicMock
 import httpx
 import pytest
 from pytest_mock import MockerFixture
@@ -20,6 +21,7 @@ class TestClient:
     async def test_client_init(self) -> None:
         client: Client = Client(api_key="test")
         assert client.api_key == "test"
+        assert isinstance(client.session, httpx.AsyncClient)
 
     @pytest.mark.parametrize(
         "status_code, expected, throwable",
@@ -111,6 +113,8 @@ class TestClient:
             assert isinstance(client, Client)
             assert client.api_key == "fake_api_key"
 
-    async def test_aexit(self, client: Client) -> None:
+    async def test_aexit(self, client: Client, mocker: MockerFixture) -> None:
+        aclose_mock: MagicMock = mocker.spy(httpx.AsyncClient, "aclose")
         with pytest.raises(NewsAPIError):
             await client.__aexit__(NewsAPIError, "fake_error", "fake_traceback")
+        assert aclose_mock.call_count == 1
