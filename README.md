@@ -13,9 +13,9 @@
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
-Hello folks !<br>
+Hello folks !
 
-![Anya Gif](https://media.tenor.com/G13lUO8AyLIAAAAC/spy-x-family-spy-family.gif)
+![anya_gif](https://media.tenor.com/G13lUO8AyLIAAAAC/spy-x-family-spy-family.gif)
 
 `pynews` is a Python library that provides a simplified and convenient way to interact with the NewsAPI service. It encapsulates the complexities of making API requests and handling responses, allowing developers to easily integrate news data into their applications.
 
@@ -42,7 +42,13 @@ To initialize `pynews` client, create an instance of `Client` class as shown bel
 ```python
 from pynews.client import Client
 
+# Normal method
 client: Client = Client(api_key="fake_api_key")
+
+# Context Manager method
+async with Client(api_key="fake_api_key") as client:
+    # do something with client
+    pass
 ```
 
 Replace `fake_api_key` with your actual NewsAPI API key.
@@ -150,4 +156,4 @@ I would like to thank the NewsAPI team for providing a powerful and comprehensiv
 
 <h1>Thanks you for reading me and using <b>pynews</b>!</h1>
 
-![Goodbye Gif](https://media.tenor.com/5UrK7rSTuscAAAAd/goodbye-bye-bye.gif)
+![goodbye_gif](https://media.tenor.com/5UrK7rSTuscAAAAd/goodbye-bye-bye.gif)
