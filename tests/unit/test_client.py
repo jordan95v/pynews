@@ -6,9 +6,9 @@ import httpx
 import pytest
 from pytest_mock import MockerFixture
 from conftest import ResponseMock
-from core import Client
-from core.models import NewsResponse, SearchEverything, SearchHeadlines
-from core.utils.exception import NewsAPIError
+from pynews import Client
+from pynews.models import NewsResponse, SearchEverything, SearchHeadlines
+from pynews.utils.exception import NewsAPIError
 
 
 @pytest.fixture

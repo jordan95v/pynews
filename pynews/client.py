@@ -3,9 +3,8 @@ import functools
 from types import TracebackType
 from typing import Any, Type
 import httpx
-from core.models.article import NewsResponse
-from core.models.search import SearchEverything, SearchHeadlines
-from core.utils.exception import NewsAPIError
+from pynews.models import NewsResponse, SearchEverything, SearchHeadlines
+from pynews.utils.exception import NewsAPIError
 
 __all__: list[str] = ["Client"]
 

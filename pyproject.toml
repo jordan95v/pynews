@@ -28,6 +28,12 @@ markers = [
 ]
 filterwarnings = ["ignore::DeprecationWarning"]
 python_files = ["tests.py", "test_*.py"]
+addopts = [
+    "-vv",
+    "--tb=short",
+    "--cov",
+    "--cov-report=term-missing",
+]
 
 [tool.coverage.run]
 omit = [
